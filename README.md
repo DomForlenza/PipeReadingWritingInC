@@ -1,44 +1,37 @@
-# ProducerConsumer
+# Pipe Reading and Writing in C
+# Created by Dominick Forlenza
 
-README FOR Producer/Consumer Java Program
-==============
+----Basic Pipe reading and writing in C--------
 
------Created by Dominick Forlenza-----
+|--Checker.c--|
 
-|--Buffer.java--|
-Buffer.java implements the FIFO circular buffer and has implemented the consume and produce functions.
+   --Checker is responsible for checking whether the divisor and dividend supplied to it by
+	the Coordinator through execlp() are divisible. The checker will print whether the numbers are divisible and will return 1 if they are divisible and 0 if they are not. Checker now reads the shared memory
+        ID from coordintor.
 
-|--Consumer.java--|
-Implementation of the consumer - includes a running count of consumed doubles and prints appropriately.
 
-|--Producer.java--|
-Implementation of the producer - includes a running count of produced doubles and prints appropriately.
+|--Coordinator.c--|
 
-|--ProducerConsumer.java--|
-Main driver program that creates producer and consumer threads and starts them.
+   --The Coordinator program is responsible for launching 4 processes that it will
+	then load using the Checker program. This program will fork() to launch
+	processes, execlp() to replace the program driving the process and supply the
+	arguments, and wait() to wait for process completion. Coordinator writes the shared memory ID to a
+    pipe and reads the return value from checker via pipes and shared memory.
 
 |--Makefile--|
 
    --The Makefile runs the following:
      --"make all"
      --"make clean"
+     --"make package"
+
 
 
 To compile:
     Type "make all" in terminal
 
 To run:
-    java ProducerConsumer
-    
+    ./coordinator <divisor> <dividend1> <dividend2> <dividend3> <dividend4>
 
-
-# PipeReadingWritingInC
-# PipeReadingWritingInC
-# PipeReadingWritingInC
-# PipeReadingWritingInC
-# PipeReadingWritingInC
-# PipeReadingWritingInC
-# PipesInC
-# CS253CPP
-# CS253CPP
-# PipeReadingWritingInC
+Example:
+    ./coordinator 3 8 15 21 45
